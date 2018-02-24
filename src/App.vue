@@ -1,46 +1,29 @@
 <template>
-   <div class="page-container">
-      <md-app md-mode="reveal">
-      <md-app-toolbar class="md-primary">
-        <md-button class="md-icon-button" @click="menuVisible = !menuVisible">
-          <md-icon>menu</md-icon>
-        </md-button>
-        <span class="md-title">Menu</span>
-      </md-app-toolbar>
-
-      <md-app-drawer :md-active.sync="menuVisible">
-        <md-toolbar class="md-transparent" md-elevation="0">Menu</md-toolbar>
-
-        <md-list>
-          <md-list-item>
-            <md-icon>move_to_inbox</md-icon>
-            <a href="/" class="md-list-item-text">Home</a>
-          </md-list-item>
-
-          <md-list-item>
-            <md-icon>send</md-icon>
-            <a href="/cadastro" class="md-list-item-text">Cadastro</a>
-          </md-list-item>
-
-        </md-list>
-      </md-app-drawer>
-
-      <md-app-content>
-        <router-view></router-view>
-      </md-app-content>
-
-    </md-app>
+  <div class="page-container">
+      <menu-collpase :routes="routes">
+          <md-app-content>
+            <transition name="page">
+              <router-view></router-view>
+            </transition>
+          </md-app-content>
+      </menu-collpase>
   </div>
 </template>
 
-
 <script>
+  import { routes } from './routes';
+  import Menu from './components/shared/menu/menu.vue';
 
   export default {
-  data: () => ({
-      menuVisible: false
+
+    components: {
+      'menu-collpase' : Menu
+    },
+    data: () => ({
+      routes: routes
     })
   }
+
 </script>
 
 <style lang="scss">
@@ -49,9 +32,7 @@
   accent: md-get-palette-color(red, A200), // The accent or secondary color
   theme: dark // This can be dark or light
   ));
-
   @import "~vue-material/dist/theme/all"; // Apply the theme
-
   #app {
     font-family: 'Avenir', Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
@@ -60,10 +41,16 @@
     color: #2c3e50;
     margin-top: 60px;
   }
-
-.md-app {
+  .md-app {
     height: 100vh;
     border: 1px solid rgba(#000, .12);
   }
-
+  .page-enter,
+  .page-leave-active {
+    opacity: 0;
+  }
+  .page-enter-active,
+  .page-leave-active {
+    transition: opacity .4s;
+  }
 </style>
