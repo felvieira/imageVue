@@ -8,16 +8,17 @@
       <div class="md-subhead">{{ grupo }}</div>
     </md-card-header>
     <md-card-expand>
-      <md-card-actions md-alignment="space-between">
+      <md-card-actions>
         <div>
-          <md-button>Action</md-button>
-          <md-button>Action</md-button>
+          <round-button class="md-raised md-primary" :icon="'edit'" />
+          <round-button class="md-raised md-accent" :icon="'delete'" />
+          <md-card-expand-trigger>
+            <!-- <round-button class="md-raised" :icon="'keyboard_arrow_down'" /> -->
+            <md-button class="md-icon-button">
+              <md-icon>keyboard_arrow_down</md-icon>
+            </md-button>
+          </md-card-expand-trigger>
         </div>
-        <md-card-expand-trigger>
-          <md-button class="md-icon-button">
-            <md-icon>keyboard_arrow_down</md-icon>
-          </md-button>
-        </md-card-expand-trigger>
       </md-card-actions>
       <md-card-expand-content>
         <md-card-content>
@@ -26,11 +27,16 @@
       </md-card-expand-content>
     </md-card-expand>
   </md-card>
+
 </template>
 
 <script>
+  import RoundButton from '../button/round-button.vue';
   export default {
-    props: ['titulo', 'imagem', 'grupo']
+    components: {
+      'round-button': RoundButton
+    },
+    props: ['titulo', 'imagem', 'grupo'],
   }
 </script>
 
@@ -42,4 +48,5 @@
     display: inline-block;
     vertical-align: top;
   }
+
 </style>
