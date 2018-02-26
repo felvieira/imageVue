@@ -10,8 +10,8 @@
     <md-card-expand>
       <md-card-actions>
         <div>
-          <round-button class="md-raised md-primary" :icon="'edit'" />
-          <round-button class="md-raised md-accent" :icon="'delete'" />
+          <round-button class="md-raised md-primary" icon="edit" />
+          <round-button class="md-raised md-accent" icon="delete" @click.native="remove" />
           <md-card-expand-trigger>
             <!-- <round-button class="md-raised" :icon="'keyboard_arrow_down'" /> -->
             <md-button class="md-icon-button">
@@ -37,6 +37,11 @@
       'round-button': RoundButton
     },
     props: ['titulo', 'imagem', 'grupo'],
+    methods: {
+      remove(foto){
+        alert("BOTAO REMOVIDO"+ this.titulo);
+      }
+    }
   }
 </script>
 

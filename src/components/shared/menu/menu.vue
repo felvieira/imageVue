@@ -29,13 +29,14 @@
     // sem validação
     // props: ['routes'],
     props: {
-      rotas: {
+      routes: {
         type: Array,
         required: true
       }
     },
     data: () => ({
       menuVisible: false,
+
     })
 
   }
