@@ -9,39 +9,17 @@
     </md-card-header>
     <md-card-expand>
       <md-card-actions>
-        <div>
-          <round-button class="md-raised md-primary" icon="edit" />
-          <round-button class="md-raised md-accent" icon="delete" @click.native="remove" />
-          <md-card-expand-trigger>
-            <!-- <round-button class="md-raised" :icon="'keyboard_arrow_down'" /> -->
-            <md-button class="md-icon-button">
-              <md-icon>keyboard_arrow_down</md-icon>
-            </md-button>
-          </md-card-expand-trigger>
-        </div>
+        <slot name="buttons"></slot>
       </md-card-actions>
-      <md-card-expand-content>
-        <md-card-content>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Optio itaque ea, nostrum odio. Dolores, sed accusantium quasi non, voluptas eius illo quas, saepe voluptate pariatur in deleniti minus sint. Excepturi.
-        </md-card-content>
-      </md-card-expand-content>
+        <slot name="description"></slot>
     </md-card-expand>
   </md-card>
-
 </template>
 
 <script>
-  import RoundButton from '../button/round-button.vue';
+
   export default {
-    components: {
-      'round-button': RoundButton
-    },
     props: ['titulo', 'imagem', 'grupo'],
-    methods: {
-      remove(foto){
-        alert("BOTAO REMOVIDO"+ this.titulo);
-      }
-    }
   }
 </script>
 
