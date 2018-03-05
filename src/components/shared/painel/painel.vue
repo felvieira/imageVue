@@ -1,7 +1,7 @@
 <template>
   <md-card>
     <md-card-media>
-      <img :src="imagem" :alt="titulo">
+      <img v-transform:scale.reverse="{ increment: 1.2, animate: true }" :src="imagem" :alt="titulo">
     </md-card-media>
     <md-card-header>
       <div class="md-title">{{ titulo }}</div>

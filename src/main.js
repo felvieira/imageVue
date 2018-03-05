@@ -10,6 +10,8 @@ import VueRouter from 'vue-router';
 
 import { routes } from './routes';
 
+import './directives/Transform';
+
 Vue.use(VueMaterial);
 Vue.use(VueResource);
 Vue.use(VueRouter);
