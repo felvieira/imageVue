@@ -3,9 +3,10 @@
     <md-field>
       <label>Filtre as imagens aqui!</label>
       <!-- <input type="search" v-on:input="filtro = $event.target.value"> -->
-      <md-input type="search" v-model="filtro" v-on:input="filtro = $event.target.value"></md-input>
+      <md-input type="search" v-model="filtro"></md-input>
     </md-field>
     {{ filtro }}
+    <h3 v-show="mensagem">{{ mensagem }}</h3>
     <div class="md-layout md-gutter md-alignment-top-center">
       <div class="md-layout-item" v-for="foto of fotosComFiltro">
         <Painel :titulo=foto.titulo :imagem=foto.url :grupo=foto.grupo>
@@ -34,6 +35,7 @@
   //Importar o componente para ser usado
   import Painel from '../shared/painel/painel.vue';
   import RoundButton from '../shared/button/round-button.vue';
+  import FotoService from '../../domains/foto/FotoService';
 
   export default {
     // Declarar como vc vai querer "chamar" seu componente
@@ -54,7 +56,15 @@
     },
     methods: {
       remove(foto) {
-        alert("BOTAO REMOVIDO" + foto.titulo);
+        this.service.deletar(foto._id)
+          .then(() => {
+            let indice = this.fotos.indexOf(foto);
+            this.fotos.splice(indice, 1);
+            this.mensagem = 'Foto removida com sucesso'
+          }, err => {
+            console.log(err);
+            this.mensagem = 'Não foi possível remover a foto'
+          });
       },
       edit(foto) {
         alert("BOTAO EDITADO" + foto.titulo);
@@ -65,13 +75,14 @@
         fotos: [],
         filtro: '',
         type: null,
+        mensagem: ''
       }
     },
     created() {
-      let promise = this.$http.get('http://localhost:3000/v1/fotos');
-      promise.then(res => res.json())
-        // this.fotos é a propriedade do objeto e é armezado no objeto fotos do componente
-        .then(fotos => this.fotos = fotos, err => console.log(err));
+      this.service = new FotoService(this.$resource);
+      this.service.listar()
+      // this.fotos é a propriedade do objeto e é armezado no objeto fotos do componente
+      .then(fotos => this.fotos = fotos, err => console.log(err));
     }
   }
 </script>

@@ -14,6 +14,7 @@ import './directives/Transform';
 
 Vue.use(VueMaterial);
 Vue.use(VueResource);
+Vue.http.options.root = 'http://localhost:3000'
 Vue.use(VueRouter);
 
 //  mode: 'history' retira a # do endereço
