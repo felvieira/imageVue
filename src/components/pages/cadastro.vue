@@ -1,6 +1,8 @@
 <template>
   <form class="md-layout md-gutter md-alignment-center" @submit.prevent="cadastrar()">
     <div class="md-layout-item  md-small-size-100 md-xsmall-size-100">
+      <h2 v-if="foto._id">Alterando</h2>
+      <h2 v-else>Incluindo</h2>
       <md-field>
         <label>Titulo da imagem</label>
         <md-input type="text" id="titulo" v-model.lazy="foto.titulo" autocomplete="off"></md-input>
@@ -32,7 +34,8 @@
 
     </div>
     <div class="md-layout-item  md-small-size-100 md-xsmall-size-100">
-      <md-button class="md-raised md-primary" type="submit">Cadastrar</md-button>
+      <md-button v-if="foto._id" class="md-raised md-primary" type="submit">Alterar</md-button>
+      <md-button v-else class="md-raised md-primary" type="submit">Cadastrar</md-button>
       <router-link :to="{name: 'home'}">
         <md-button class="md-raised md-accent">Voltar</md-button>
       </router-link>
@@ -49,23 +52,35 @@
 
     data() {
       return {
-        foto: new Foto()
+        foto: new Foto(),
+        id: this.$route.params.id
       }
     },
 
     methods: {
 
       cadastrar() {
-
         this.service
           .cadastra(this.foto)
-          .then(() => this.foto = new Foto(), err => console.loog(err));
+          .then(() => {
+            if (this.id) {
+              this.$router.push({
+                name: 'home'
+              });
+            }
+            this.foto = new Foto(), err => console.loog(err)
+          });
 
       }
     },
 
     created() {
       this.service = new FotoService(this.$resource);
+      if (this.id) {
+        this.service
+          .busca(this.id)
+          .then(foto => this.foto = foto);
+      }
     }
 
   }

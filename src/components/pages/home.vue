@@ -11,8 +11,8 @@
       <div class="md-layout-item" v-for="foto of fotosComFiltro">
         <Painel :titulo=foto.titulo :imagem=foto.url :grupo=foto.grupo>
           <div slot="buttons">
-            <round-button color="md-primary" icon="edit" @buttonActive="edit(foto)" :confirmacao="true" />
-            <round-button color="md-accent" icon="delete" @buttonActive="remove(foto)" :confirmacao="false" />
+            <router-link :to="{name: 'alterar', params: {id: foto._id} }"><round-button color="md-primary" icon="edit" @buttonActive="edit(foto)" :confirmacao="false" /></router-link>
+            <round-button color="md-accent" icon="delete" @buttonActive="remove(foto)" :confirmacao="true" />
             <md-card-expand-trigger>
               <!-- <round-button class="md-raised" :icon="'keyboard_arrow_down'" /> -->
               <md-button class="md-icon-button">
@@ -22,7 +22,7 @@
           </div>
           <md-card-expand-content slot="description">
             <md-card-content>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Optio itaque ea, nostrum odio. Dolores, sed accusantium quasi non, voluptas eius illo quas, saepe voluptate pariatur in deleniti minus sint. Excepturi.
+              {{ foto.descricao }}
             </md-card-content>
           </md-card-expand-content>
         </Painel>
@@ -62,12 +62,11 @@
             this.fotos.splice(indice, 1);
             this.mensagem = 'Foto removida com sucesso'
           }, err => {
-            console.log(err);
-            this.mensagem = 'Não foi possível remover a foto'
+            this.mensagem = err.message;
           });
       },
       edit(foto) {
-        alert("BOTAO EDITADO" + foto.titulo);
+
       },
     },
     data() {
@@ -82,7 +81,9 @@
       this.service = new FotoService(this.$resource);
       this.service.listar()
       // this.fotos é a propriedade do objeto e é armezado no objeto fotos do componente
-      .then(fotos => this.fotos = fotos, err => console.log(err));
+      .then(fotos => this.fotos = fotos, err => {
+       this.mensagem = err.message;
+      });
     }
   }
 </script>

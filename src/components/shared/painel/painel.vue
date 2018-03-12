@@ -5,7 +5,7 @@
     </md-card-media>
     <md-card-header>
       <div class="md-title">{{ titulo }}</div>
-      <div class="md-subhead">{{ grupo }}</div>
+      <!-- <div class="md-subhead">{{ grupo }}</div> -->
     </md-card-header>
     <md-card-expand>
       <md-card-actions>

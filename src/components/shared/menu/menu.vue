@@ -18,6 +18,8 @@
         </md-list>
       </md-app-drawer>
       <slot></slot>
+
+
    </md-app>
 </template>
 
